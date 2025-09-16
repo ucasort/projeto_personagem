@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Personagem — {{ personagem.nome }}{% endblock %}
+{% block content %}
+<section class="card">
+  <header class="flex between center">
+    <h2>{{ personagem.nome }}</h2>
+    <a class="btn" href="{{ url_for('character.index') }}">Novo</a>
+  </header>
+
+  <div class="grid-2">
+    <div>
+      <h3>Ficha</h3>
+      <p><strong>Raça:</strong> {{ personagem.raca.nome }}<br>
+         <strong>Classe:</strong> {{ personagem.classe.nome }}</p>
+
+      <table class="attrs">
+        <thead>
+          <tr><th>Atributo</th><th>Valor</th></tr>
+        </thead>
+        <tbody>
+          {% for k, v in personagem.atributos.items() %}
+          <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="mt">
+        <a class="btn" href="{{ url_for('character.rerolar', nome=personagem.nome, raca=personagem.raca_id, classe=personagem.classe_id, modo=modo) }}">Rerrolar</a>
+      </div>
+    </div>
+
+    <div>
+      <h3>Habilidades (lista demonstrativa)</h3>
+      <ul>
+        {% for h in personagem.habilidades %}
+          <li>{{ h }}</li>
+        {% endfor %}
+      </ul>
+      <p class="hint">* Nesta entrega, as habilidades são listadas apenas para visualização (não funcionais).</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

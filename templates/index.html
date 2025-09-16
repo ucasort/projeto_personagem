@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Início — RPG Personagem{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>Gerar Personagem</h2>
+  <form method="post" action="{{ url_for('character.gerar') }}" class="grid-form">
+    <label>
+      Nome
+      <input type="text" name="nome" placeholder="Ex.: Artheon" required>
+    </label>
+
+    <fieldset class="span-2">
+      <legend>Modo de Geração</legend>
+      <label><input type="radio" name="modo" value="classico" checked> Clássico (3d6)</label>
+      <label><input type="radio" name="modo" value="heroico"> Heróico (4d6 descarta o menor)</label>
+      <label><input type="radio" name="modo" value="aventureiro"> Aventureiro (2d6 + 6)</label>
+    </fieldset>
+
+    <label>
+      Raça
+      <select name="raca" id="racaSelect" required>
+        {% for rid, r in races.items() %}
+          <option value="{{ rid }}">{{ r.nome }}</option>
+        {% endfor %}
+      </select>
+      <small id="raceHint"></small>
+    </label>
+
+    <label>
+      Classe
+      <select name="classe" id="classeSelect" required>
+        {% for cid, c in classes.items() %}
+          <option value="{{ cid }}">{{ c.nome }}</option>
+        {% endfor %}
+      </select>
+      <small id="classHint"></small>
+    </label>
+
+    <div class="span-2">
+      <button type="submit" class="btn">Gerar</button>
+    </div>
+  </form>
+
+  <details class="mt">
+    <summary>Como funciona?</summary>
+    <ul>
+      <li><strong>Clássico</strong>: rola 3d6 para cada atributo.</li>
+      <li><strong>Heróico</strong>: rola 4d6 e descarta o menor para cada atributo.</li>
+      <li><strong>Aventureiro</strong>: rola 2d6 e soma +6 em cada atributo.</li>
+      <li>Aplicamos <em>bônus raciais</em> em seguida (ex.: +1 CAR para Humanos).</li>
+    </ul>
+  </details>
+</section>
+{% endblock %}
